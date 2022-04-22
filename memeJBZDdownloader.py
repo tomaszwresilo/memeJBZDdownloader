@@ -26,7 +26,6 @@ source7 = "https://jbzd.com.pl/str/7"
 
 
 emoji1time = "\U0001F606"
-emoji = "\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606""\U0001F606"
 breakPrint = "===================="
 
 
@@ -42,11 +41,9 @@ d1 = today.strftime("%d/%m/%Y")
 # Print after download
 # -------------------------------------------
 print(breakPrint)
-print(emoji)
 print("Pobieranie memów".center(20))
 print("z dnia:".center(20))
 print(d1.center(20))
-print(emoji)
 print(breakPrint)
 
 # -------------------------------------------
@@ -120,21 +117,10 @@ memes(input=source7)
 # Pring after download
 # -------------------------------------------
 
-print(emoji)
+print(" ")
 print(breakPrint)
 print("Pobieranie memów".center(20))
 print("ZAKOŃCZONE".center(20))
-print(breakPrint)
-print(emoji)
-print(breakPrint)
-print("PAAA".center(5))
-print("PAAA".center(10))
-print("PAAA".center(15))
-print("PAAA".center(20))
-print("PAAA".center(25))
-print("PAAA".center(30))
-print(breakPrint)
-print(emoji)
 print(breakPrint)
 
 # -------------------------------------------
