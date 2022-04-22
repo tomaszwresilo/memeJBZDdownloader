@@ -16,6 +16,8 @@ source4 = "https://jbzd.com.pl/str/4"
 source5 = "https://jbzd.com.pl/str/5"
 source6 = "https://jbzd.com.pl/str/6"
 source7 = "https://jbzd.com.pl/str/7"
+
+
 # -------------------------------------------
 
 
@@ -52,7 +54,7 @@ print(breakPrint)
 
 
 def memes(input):
- links=[input]
+ links=[input] # add loop input 1-6
  for url in links:
     source_code = requests.get(url)
     plain_text = source_code.text
@@ -103,15 +105,9 @@ def memes(input):
 # Function using sorce
 # -------------------------------------------
 
-
-memes(input=source1)
-memes(input=source2)
-memes(input=source3)
-memes(input=source4)
-memes(input=source5)
-memes(input=source6)
-memes(input=source7)
-
+memesArray = [source1,source2,source3,source4,source5,source6,source7]
+for numberOfSource in memesArray:
+  memes(input=numberOfSource)
 
 # -------------------------------------------
 # Pring after download
