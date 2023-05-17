@@ -1,122 +1,59 @@
-
 import requests
 from bs4 import BeautifulSoup
 import urllib.request
-import random
 from datetime import date
+import os
 
-# -------------------------------------------
-# Sources of memes
-# -------------------------------------------
+# Source URLs for memes
+sources = ["https://jbzd.com.pl/str/{}".format(i) for i in range(1, 8)]
 
-source1 = "https://jbzd.com.pl/str/1"
-source2 = "https://jbzd.com.pl/str/2"
-source3 = "https://jbzd.com.pl/str/3"
-source4 = "https://jbzd.com.pl/str/4"
-source5 = "https://jbzd.com.pl/str/5"
-source6 = "https://jbzd.com.pl/str/6"
-source7 = "https://jbzd.com.pl/str/7"
+# Separator for printing
+separator = "=" * 20
 
-
-# -------------------------------------------
-
-
-
-# -------------------------------------------
-# Prints
-# -------------------------------------------
-
-
-emoji1time = "\U0001F606"
-breakPrint = "===================="
-
-
-# -------------------------------------------
-# Today date
-# -------------------------------------------
+# Today's date
 today = date.today()
-d1 = today.strftime("%d/%m/%Y")
+date_folder = today.strftime("%Y-%m-%d")
+folder_name = f"{date_folder} - MEMES"
 
+# Create folder if it doesn't exist
+if not os.path.exists(folder_name):
+    os.makedirs(folder_name)
 
-
-# -------------------------------------------
-# Print after download
-# -------------------------------------------
-print(breakPrint)
-print("Pobieranie memów".center(20))
-print("z dnia:".center(20))
-print(d1.center(20))
-print(breakPrint)
-
-# -------------------------------------------
-#   Main code
-# -------------------------------------------
-
-
-def memes(input):
- links=[input] # add loop input 1-6
- for url in links:
+# Function to download memes
+def download_memes(url):
     source_code = requests.get(url)
     plain_text = source_code.text
     soup = BeautifulSoup(plain_text, "html.parser")
 
- for link in soup.find_all("img",{"class":"article-image"}):
-    src = link.get('src')
-    img_number = src[47:79]
-    img_page = input[24]
+    for link in soup.find_all("img", {"class": "article-image"}):
+        image_src = link.get("src")
+        meme_id = image_src.split("/")[-1][:-4]
+        page_number = url.split("/")[-1]
 
-    full_name = "MemeID_"+img_number+".jpg"
+        image_name = os.path.join(folder_name, f"MemeID_{meme_id}.jpg")
 
+        if not os.path.exists(image_name):
+            try:
+                urllib.request.urlretrieve(image_src, image_name)
+                print("{}\n"
+                      ".... Downloading memes! ...\n"
+                      "From JBZD.PL\n"
+                      "Page: [{}]\n"
+                      "Meme ID: [{}]\n"
+                      "         [{}]\n"
+                      "{}\n".format(separator, page_number, meme_id[:16], meme_id[16:32], separator))
+            except Exception as e:
+                print("Error occurred while downloading meme: {}".format(str(e)))
+        else:
+            print("File '{}' already exists. Skipping download.".format(image_name))
 
-    urllib.request.urlretrieve(src, full_name)
+# Download memes from each source
+for source in sources:
+    download_memes(source)
 
-# -------------------------------------------
-# Downloading print
-# -------------------------------------------
+# Print after download
+print("\n{}\n"
+      "Meme Download\n"
+      "COMPLETED\n"
+      "{}\n".format(separator, separator))
 
-    img_numberInconsole1 = img_number[0:16]
-    img_numberInconsole2 = img_number[16:32]
-
-
-
-    print(breakPrint)
-    print("....................")
-    print(". Pobieram memy !  .")
-    print(".Ze strony JBZD.PL .")
-    print("........"+emoji1time+"..........")
-    print("....................")
-    print("......Strona:.......")
-    print("........["+img_page+"].........")
-    print("....................")
-    print("......ID mema:......")
-    print(".["+img_numberInconsole1+"].")
-    print(".["+img_numberInconsole2+"].")
-    print("....................")
-    print(breakPrint)
-    # print(".......Źródło:......")
-    # print("."+src+".")
-    # print("....................")
-
-
-# -------------------------------------------
-
-
-# -------------------------------------------
-# Function using sorce
-# -------------------------------------------
-
-memesArray = [source1,source2,source3,source4,source5,source6,source7]
-for numberOfSource in memesArray:
-  memes(input=numberOfSource)
-
-# -------------------------------------------
-# Pring after download
-# -------------------------------------------
-
-print(" ")
-print(breakPrint)
-print("Pobieranie memów".center(20))
-print("ZAKOŃCZONE".center(20))
-print(breakPrint)
-
-# -------------------------------------------
