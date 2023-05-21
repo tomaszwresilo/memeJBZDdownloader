@@ -4,22 +4,21 @@ import urllib.request
 from datetime import date
 import os
 
-# Source URLs for memes
+
 sources = ["https://jbzd.com.pl/str/{}".format(i) for i in range(1, 8)]
 
-# Separator for printing
+
 separator = "=" * 20
 
-# Today's date
 today = date.today()
 date_folder = today.strftime("%Y-%m-%d")
 folder_name = f"{date_folder} - MEMES"
 
-# Create folder if it doesn't exist
+
 if not os.path.exists(folder_name):
     os.makedirs(folder_name)
 
-# Function to download memes
+
 def download_memes(url):
     source_code = requests.get(url)
     plain_text = source_code.text
@@ -47,11 +46,9 @@ def download_memes(url):
         else:
             print("File '{}' already exists. Skipping download.".format(image_name))
 
-# Download memes from each source
 for source in sources:
     download_memes(source)
 
-# Print after download
 print("\n{}\n"
       "Meme Download\n"
       "COMPLETED\n"
